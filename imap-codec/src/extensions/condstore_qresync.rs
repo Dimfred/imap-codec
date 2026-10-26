@@ -140,7 +140,31 @@ pub(crate) fn entry_type_req(input: &[u8]) -> IMAPResult<&[u8], EntryTypeReq> {
 
 #[cfg(test)]
 mod tests {
-    use crate::response::resp_text;
+    use std::num::{NonZeroU32, NonZeroU64};
+
+    use imap_types::{
+        core::Vec1,
+        fetch::MessageDataItem,
+        response::{Data, Response},
+    };
+
+    use crate::{response::resp_text, testing::kat_inverse_response};
+
+    #[test]
+    fn test_kat_inverse_response_fetch_modseq() {
+        kat_inverse_response(&[(
+            b"* 1 FETCH (UID 4 MODSEQ (12121231000))\r\n".as_ref(),
+            b"".as_ref(),
+            Response::Data(Data::Fetch {
+                seq: NonZeroU32::new(1).unwrap(),
+                items: Vec1::try_from(vec![
+                    MessageDataItem::Uid(NonZeroU32::new(4).unwrap()),
+                    MessageDataItem::ModSeq(NonZeroU64::new(12121231000).unwrap()),
+                ])
+                .unwrap(),
+            }),
+        )]);
+    }
 
     #[test]
     fn test_condstore_qresync_codes() {
