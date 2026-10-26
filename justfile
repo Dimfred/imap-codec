@@ -54,6 +54,7 @@ cargo_hack mode: install_cargo_hack
         --group-features \
         starttls,\
         ext_condstore_qresync,\
+        ext_gmail,\
         ext_id,\
         ext_login_referrals,\
         ext_mailbox_referrals,\
@@ -85,6 +86,7 @@ cargo_hack mode: install_cargo_hack
         --group-features \
         starttls,\
         ext_condstore_qresync,\
+        ext_gmail,\
         ext_id,\
         ext_login_referrals,\
         ext_mailbox_referrals,\

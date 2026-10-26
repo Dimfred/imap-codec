@@ -13,6 +13,8 @@ use bounded_static_derive::ToStatic;
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
+#[cfg(feature = "ext_gmail")]
+use crate::extensions::gmail::XGmLabel;
 use crate::{
     body::BodyStructure,
     core::{AString, NString, NString8, Vec1},
@@ -244,6 +246,33 @@ pub enum MessageDataItemName<'a> {
     #[cfg(feature = "ext_condstore_qresync")]
     #[cfg_attr(docsrs, doc(cfg("ext_condstore_qresync")))]
     ModSeq,
+
+    /// The Gmail message id.
+    ///
+    /// ```imap
+    /// X-GM-MSGID
+    /// ```
+    #[cfg(feature = "ext_gmail")]
+    #[cfg_attr(docsrs, doc(cfg("ext_gmail")))]
+    XGmMsgId,
+
+    /// The Gmail thread id.
+    ///
+    /// ```imap
+    /// X-GM-THRID
+    /// ```
+    #[cfg(feature = "ext_gmail")]
+    #[cfg_attr(docsrs, doc(cfg("ext_gmail")))]
+    XGmThrId,
+
+    /// The Gmail labels.
+    ///
+    /// ```imap
+    /// X-GM-LABELS
+    /// ```
+    #[cfg(feature = "ext_gmail")]
+    #[cfg_attr(docsrs, doc(cfg("ext_gmail")))]
+    XGmLabels,
 }
 
 /// Message data item.
@@ -385,6 +414,33 @@ pub enum MessageDataItem<'a> {
     #[cfg(feature = "ext_condstore_qresync")]
     #[cfg_attr(docsrs, doc(cfg("ext_condstore_qresync")))]
     ModSeq(NonZeroU64),
+
+    /// The Gmail message id, unique across all folders.
+    ///
+    /// ```imap
+    /// X-GM-MSGID
+    /// ```
+    #[cfg(feature = "ext_gmail")]
+    #[cfg_attr(docsrs, doc(cfg("ext_gmail")))]
+    XGmMsgId(u64),
+
+    /// The Gmail thread id.
+    ///
+    /// ```imap
+    /// X-GM-THRID
+    /// ```
+    #[cfg(feature = "ext_gmail")]
+    #[cfg_attr(docsrs, doc(cfg("ext_gmail")))]
+    XGmThrId(u64),
+
+    /// The Gmail labels.
+    ///
+    /// ```imap
+    /// X-GM-LABELS
+    /// ```
+    #[cfg(feature = "ext_gmail")]
+    #[cfg_attr(docsrs, doc(cfg("ext_gmail")))]
+    XGmLabels(Vec<XGmLabel<'a>>),
 }
 
 /// A part specifier is either a part number or one of the following:

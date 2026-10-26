@@ -16,6 +16,8 @@ use nom::{
 
 #[cfg(feature = "ext_condstore_qresync")]
 use crate::extensions::condstore_qresync::mod_sequence_value;
+#[cfg(feature = "ext_gmail")]
+use crate::extensions::gmail::{x_gm_fetch_att, x_gm_msg_att};
 use crate::{
     body::body,
     core::{astring, nstring, number, nz_number},
@@ -115,6 +117,8 @@ pub(crate) fn fetch_att(input: &[u8]) -> IMAPResult<&[u8], MessageDataItemName> 
         value(MessageDataItemName::Rfc822, tag_no_case(b"RFC822")),
         #[cfg(feature = "ext_condstore_qresync")]
         value(MessageDataItemName::ModSeq, tag_no_case(b"MODSEQ")),
+        #[cfg(feature = "ext_gmail")]
+        x_gm_fetch_att,
     ))(input)
 }
 
@@ -124,12 +128,15 @@ pub(crate) fn fetch_att(input: &[u8]) -> IMAPResult<&[u8], MessageDataItemName> 
 ///           ")"
 /// ```
 pub(crate) fn msg_att(input: &[u8]) -> IMAPResult<&[u8], Vec1<MessageDataItem>> {
+    #[cfg(not(feature = "ext_gmail"))]
+    let item = alt((msg_att_dynamic, msg_att_static));
+
+    #[cfg(feature = "ext_gmail")]
+    let item = alt((msg_att_dynamic, msg_att_static, x_gm_msg_att));
+
     delimited(
         tag(b"("),
-        map(
-            separated_list1(sp, alt((msg_att_dynamic, msg_att_static))),
-            Vec1::unvalidated,
-        ),
+        map(separated_list1(sp, item), Vec1::unvalidated),
         tag(b")"),
     )(input)
 }

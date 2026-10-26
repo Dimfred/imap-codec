@@ -121,7 +121,8 @@
 //! |-----------------------|------------------------------------------------------------------------------------------------------------------------------|------------|
 //! | starttls              | IMAP4rev1 ([RFC 3501]; section 6.2.1)                                                                                        |            |
 //! | ext_condstore_qresync | IMAP Extensions: Quick Flag Changes Resynchronization (CONDSTORE) and Quick Mailbox Resynchronization (QRESYNC) ([RFC 7162]) | Unfinished |
-//! | ext_id                | IMAP4 ID extension ([RFC 2971])                                                                                              | Unfinished |
+//! | ext_gmail             | Gmail IMAP Extensions (X-GM-MSGID, X-GM-THRID, X-GM-LABELS)                                                                  | Unfinished |
+//! | ext_id                | IMAP4 ID extension ([RFC 2971])                                                                                    | Unfinished |
 //! | ext_login_referrals   | IMAP4 Login Referrals ([RFC 2221])                                                                                           | Unfinished |
 //! | ext_mailbox_referrals | IMAP4 Mailbox Referrals ([RFC 2193])                                                                                         | Unfinished |
 //! | ext_metadata          | The IMAP METADATA Extension ([RFC 5464])                                                                                     | Unfinished |

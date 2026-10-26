@@ -5,6 +5,8 @@ pub mod compress;
 #[cfg(feature = "ext_condstore_qresync")]
 pub mod condstore_qresync;
 pub mod enable;
+#[cfg(feature = "ext_gmail")]
+pub mod gmail;
 pub mod idle;
 #[cfg(feature = "ext_metadata")]
 pub mod metadata;

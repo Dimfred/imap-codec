@@ -16,6 +16,7 @@ starttls = ["imap-types/starttls"]
 
 # IMAP Extensions
 ext_condstore_qresync = ["imap-types/ext_condstore_qresync"]
+ext_gmail = ["imap-types/ext_gmail"]
 ext_id = ["imap-types/ext_id"]
 ext_login_referrals = ["imap-types/ext_login_referrals"]
 ext_mailbox_referrals = ["imap-types/ext_mailbox_referrals"]
@@ -28,6 +29,7 @@ ext_utf8 = ["imap-types/ext_utf8"]
 ext = [
     "starttls",
     "ext_condstore_qresync",
+    "ext_gmail",
     "ext_id",
     #"ext_login_referrals",
     #"ext_mailbox_referrals",

@@ -1162,6 +1162,12 @@ impl EncodeIntoContext for MessageDataItemName<'_> {
             }
             #[cfg(feature = "ext_condstore_qresync")]
             MessageDataItemName::ModSeq => ctx.write_all(b"MODSEQ"),
+            #[cfg(feature = "ext_gmail")]
+            MessageDataItemName::XGmMsgId => ctx.write_all(b"X-GM-MSGID"),
+            #[cfg(feature = "ext_gmail")]
+            MessageDataItemName::XGmThrId => ctx.write_all(b"X-GM-THRID"),
+            #[cfg(feature = "ext_gmail")]
+            MessageDataItemName::XGmLabels => ctx.write_all(b"X-GM-LABELS"),
         }
     }
 }
@@ -1778,6 +1784,16 @@ impl EncodeIntoContext for MessageDataItem<'_> {
             }
             #[cfg(feature = "ext_condstore_qresync")]
             Self::ModSeq(value) => write!(ctx, "MODSEQ {value}"),
+            #[cfg(feature = "ext_gmail")]
+            Self::XGmMsgId(value) => write!(ctx, "X-GM-MSGID {value}"),
+            #[cfg(feature = "ext_gmail")]
+            Self::XGmThrId(value) => write!(ctx, "X-GM-THRID {value}"),
+            #[cfg(feature = "ext_gmail")]
+            Self::XGmLabels(labels) => {
+                ctx.write_all(b"X-GM-LABELS (")?;
+                join_serializable(labels, b" ", ctx)?;
+                ctx.write_all(b")")
+            }
         }
     }
 }
